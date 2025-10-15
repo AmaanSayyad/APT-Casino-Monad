@@ -8,9 +8,13 @@ import { useRouter } from "next/navigation";
 import { useAccount, useChainId, useWalletClient } from 'wagmi';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBalance, setLoading, loadBalanceFromStorage } from '@/store/balanceSlice';
+import { useSmartAccount } from '@/hooks/useSmartAccount';
+import { formatSmartAccountAddress } from '@/utils/smartAccountUtils';
 import EthereumConnectWalletButton from "./EthereumConnectWalletButton";
 import WithdrawModal from "./WithdrawModal";
 import LiveChat from "./LiveChat";
+import SmartAccountInfo from "./SmartAccountInfo";
+import SmartAccountModal from "./SmartAccountModal";
 import { useGlobalWalletPersistence } from '../hooks/useGlobalWalletPersistence';
 
 
@@ -117,6 +121,7 @@ export default function Navbar() {
 
   // User balance management
   const [showBalanceModal, setShowBalanceModal] = useState(false);
+  const [showSmartAccountModal, setShowSmartAccountModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("0");
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [depositAmount, setDepositAmount] = useState("");
@@ -129,6 +134,15 @@ export default function Navbar() {
   const chainId = useChainId();
   const { data: walletClient } = useWalletClient();
   const isWalletReady = isConnected && address;
+  
+  // Smart Account hook
+  const { 
+    isSmartAccount, 
+    smartAccountInfo, 
+    capabilities, 
+    hasSmartAccountSupport,
+    supportedFeatures 
+  } = useSmartAccount();
   
   // Use global wallet persistence hook
   useGlobalWalletPersistence();
@@ -994,14 +1008,31 @@ export default function Navbar() {
               </div>
             )}
             
-            {/* Pyth Entropy Status */}
+            {/* Smart Account Status */}
             {isConnected && (
-              <div className="px-3 py-2 bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 text-blue-300 font-medium rounded-lg flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-                Pyth Entropy
-              </div>
+              <button
+                onClick={() => setShowSmartAccountModal(true)}
+                className={`px-3 py-2 bg-gradient-to-r border font-medium rounded-lg flex items-center gap-2 hover:opacity-80 transition-opacity ${
+                  isSmartAccount 
+                    ? 'from-blue-500/20 to-cyan-600/20 border-blue-500/30 text-blue-300' 
+                    : 'from-green-500/20 to-emerald-600/20 border-green-500/30 text-green-300'
+                }`}
+              >
+                {isSmartAccount ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="9" cy="9" r="2"/>
+                    <path d="M21 15.5c-1.5-1.5-4-1.5-5.5 0"/>
+                    <path d="M12 12l9 9"/>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                )}
+                {isSmartAccount ? 'Smart Account' : 'EOA Account'}
+              </button>
             )}
             
             {/* Live Chat Button */}
@@ -1124,6 +1155,9 @@ export default function Navbar() {
               </div>
               
               {/* Current Balance */}
+              {/* Smart Account Info */}
+              <SmartAccountInfo />
+              
               <div className="mb-4 p-3 bg-gradient-to-r from-green-900/20 to-green-800/10 rounded-lg border border-green-800/30">
                 <span className="text-sm text-gray-300">Current Balance:</span>
                 <div className="text-lg text-green-300 font-bold">
@@ -1248,6 +1282,12 @@ export default function Navbar() {
       <LiveChat
         open={showLiveChat}
         onClose={() => setShowLiveChat(false)}
+      />
+      
+      {/* Smart Account Modal */}
+      <SmartAccountModal
+        isOpen={showSmartAccountModal}
+        onClose={() => setShowSmartAccountModal(false)}
       />
       
     </>

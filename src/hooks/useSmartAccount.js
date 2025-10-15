@@ -32,9 +32,9 @@ export const useSmartAccount = () => {
         setSmartAccountInfo(accountInfo);
         setIsSmartAccount(accountInfo?.isSmartAccount || false);
 
-        // Get capabilities
+        // Get capabilities with error handling
         const caps = await checkSmartAccountSupport(walletClient);
-        setCapabilities(caps);
+        setCapabilities(caps || { isSupported: false, capabilities: {}, provider: 'Unknown' });
 
         console.log('Smart Account Info:', accountInfo);
         console.log('Smart Account Capabilities:', caps);
@@ -67,7 +67,7 @@ export const useSmartAccount = () => {
       if (permissions) {
         // Reload capabilities after enabling
         const caps = await checkSmartAccountSupport(walletClient);
-        setCapabilities(caps);
+        setCapabilities(caps || { isSupported: false, capabilities: {}, provider: 'Unknown' });
       }
 
       return !!permissions;

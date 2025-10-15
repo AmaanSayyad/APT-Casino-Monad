@@ -981,7 +981,7 @@ const Game = ({ betSettings = {}, onGameStatusChange, onGameComplete }) => {
               } rounded-lg text-white font-bold shadow-lg transition-all flex items-center justify-center gap-2`}
             >
               <FaCoins className="text-yellow-300" />
-              <span>CASH OUT ({calculatePayout()} ETH)</span>
+              <span>CASH OUT ({calculatePayout()} MON)</span>
             </button>
           </div>
         )}

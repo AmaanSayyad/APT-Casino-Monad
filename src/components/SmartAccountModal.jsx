@@ -137,19 +137,27 @@ const SmartAccountModal = ({ isOpen, onClose }) => {
             </div>
 
             {/* MetaMask Support */}
-            {hasSmartAccountSupport && (
-              <div className="bg-orange-900/30 rounded-lg p-3 border border-orange-700/50">
-                <div className="flex items-center space-x-2 mb-1">
-                  <svg className="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-sm font-medium text-orange-400">MetaMask Smart Accounts</span>
-                </div>
-                <p className="text-xs text-orange-300">
-                  Your MetaMask wallet supports Smart Account features for enhanced gaming experience.
-                </p>
+            <div className="bg-blue-900/30 rounded-lg p-3 border border-blue-700/50">
+              <div className="flex items-center space-x-2 mb-1">
+                <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm font-medium text-blue-400">
+                  {isSmartAccount ? 'EIP-4337 Smart Account' : 'Standard EOA Account'}
+                </span>
               </div>
-            )}
+              <p className="text-xs text-blue-300">
+                {isSmartAccount 
+                  ? 'This is a smart contract account with potential for advanced features.'
+                  : 'This is a standard Ethereum account. Smart Account features are not available.'
+                }
+              </p>
+              {smartAccountInfo?.note && (
+                <p className="text-xs text-gray-400 mt-1 italic">
+                  {smartAccountInfo.note}
+                </p>
+              )}
+            </div>
 
             {/* Action Button */}
             <div className="pt-2">

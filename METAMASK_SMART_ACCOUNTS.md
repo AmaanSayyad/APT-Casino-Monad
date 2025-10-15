@@ -2,7 +2,9 @@
 
 ## 🔷 What are MetaMask Smart Accounts?
 
-MetaMask Smart Accounts enable you to use smart contract-based accounts instead of traditional Externally Owned Accounts (EOA). These accounts offer advanced features and enhanced functionality:
+MetaMask Smart Accounts (based on EIP-4337 Account Abstraction) enable you to use smart contract-based accounts instead of traditional Externally Owned Accounts (EOA). These accounts offer advanced features and enhanced functionality:
+
+> **Note**: Smart Accounts are currently in beta and may not be available on all networks. This implementation provides detection and graceful fallbacks.
 
 ### ✨ Features:
 - **Batch Transactions**: Execute multiple operations in a single transaction
@@ -172,10 +174,31 @@ Smart Accounts on MetaMask Mobile:
 
 ## 🚨 Important Notes
 
-1. **Compatibility**: Not all dApps support Smart Accounts
-2. **Gas Costs**: Initial setup may be more expensive
-3. **Backup**: Always set up recovery methods
-4. **Testing**: Test on testnet first
+1. **Beta Status**: Smart Accounts are currently in beta and not widely available
+2. **Network Support**: Limited to specific networks and providers
+3. **Feature Availability**: Most advanced features are not yet implemented
+4. **Compatibility**: Not all dApps support Smart Accounts
+5. **Detection Only**: This implementation primarily detects Smart Accounts rather than creating them
+6. **Fallback**: The app gracefully falls back to standard EOA functionality
+
+## 🔍 Current Implementation Status
+
+### ✅ Implemented
+- Smart Account detection via bytecode analysis
+- EOA vs Smart Account differentiation
+- Graceful fallback to standard accounts
+- User interface indicators
+
+### ⏳ Future Features (When Available)
+- Batch transaction execution
+- Sponsored transactions
+- Session key management
+- Social recovery mechanisms
+
+### 🚫 Not Yet Available
+- Smart Account creation
+- Most EIP-4337 features
+- Cross-chain Smart Account support
 
 ## 🔗 Useful Links
 

@@ -39,7 +39,7 @@ import pythEntropyService from '@/services/PythEntropyService';
 // Ethereum client functions will be added here when needed
 
 // Casino module address for Ethereum
-const CASINO_MODULE_ADDRESS = "0x1234567890123456789012345678901234567890123456789012345678901234";
+const CASINO_MODULE_ADDRESS = process.env.NEXT_PUBLIC_CASINO_MODULE_ADDRESS || "0x0000000000000000000000000000000000000000";
 
 const parseMONAmount = (amount) => {
   // Parse MON amount

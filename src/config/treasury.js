@@ -3,11 +3,11 @@
 
 // Test Treasury Address (Replace with your actual treasury address in production)
 export const TREASURY_CONFIG = {
-  // Casino Treasury Wallet (Arbitrum Sepolia)
-  ADDRESS: process.env.TREASURY_ADDRESS || '0xb424d2369F07b925D1218B08e56700AF5928287b',
+  // Monad Testnet Treasury Wallet (for deposits/withdrawals)
+  ADDRESS: process.env.MONAD_TREASURY_ADDRESS || process.env.TREASURY_ADDRESS || '0x025182b20Da64b5997d09a5a62489741F68d9B96',
   
   // ⚠️  DEVELOPMENT ONLY - Never use in production!
-  PRIVATE_KEY: process.env.TREASURY_PRIVATE_KEY || '0x080c0b0dc7aa27545fab73d29b06f33e686d1491aef785bf5ced325a32c14506',
+  PRIVATE_KEY: process.env.MONAD_TREASURY_PRIVATE_KEY || process.env.TREASURY_PRIVATE_KEY || '0x73e0cfb4d786d6e542533e18eb78fb5c727ab802b89c6850962042a8f0835f0c',
   
   // Network configuration for Monad Testnet (for deposit/withdraw)
   NETWORK: {

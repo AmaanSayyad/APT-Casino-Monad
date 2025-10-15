@@ -9,12 +9,12 @@ export const TREASURY_CONFIG = {
   // ⚠️  DEVELOPMENT ONLY - Never use in production!
   PRIVATE_KEY: process.env.TREASURY_PRIVATE_KEY || '0x080c0b0dc7aa27545fab73d29b06f33e686d1491aef785bf5ced325a32c14506',
   
-  // Network configuration for 0G Galileo Testnet (for deposit/withdraw)
+  // Network configuration for Monad Testnet (for deposit/withdraw)
   NETWORK: {
-    CHAIN_ID: '0x40da', // 0G Galileo testnet (16602 in hex)
-    CHAIN_NAME: '0G-Galileo-Testnet',
-    RPC_URL: process.env.NEXT_PUBLIC_0G_GALILEO_RPC || 'https://evmrpc-testnet.0g.ai',
-    EXPLORER_URL: process.env.NEXT_PUBLIC_0G_GALILEO_EXPLORER || 'https://chainscan-galileo.0g.ai'
+    CHAIN_ID: '0x279f', // Monad testnet (10143 in hex)
+    CHAIN_NAME: 'Monad Testnet',
+    RPC_URL: process.env.NEXT_PUBLIC_MONAD_TESTNET_RPC || 'https://testnet-rpc.monad.xyz',
+    EXPLORER_URL: process.env.NEXT_PUBLIC_MONAD_TESTNET_EXPLORER || 'https://explorer.testnet.monad.xyz'
   },
   
   // Gas settings for transactions
@@ -23,10 +23,10 @@ export const TREASURY_CONFIG = {
     WITHDRAW_LIMIT: process.env.GAS_LIMIT_WITHDRAW ? '0x' + parseInt(process.env.GAS_LIMIT_WITHDRAW).toString(16) : '0x186A0', // 100000 gas for more complex operations
   },
   
-  // Minimum and maximum deposit amounts (in OG)
+  // Minimum and maximum deposit amounts (in MON)
   LIMITS: {
-    MIN_DEPOSIT: parseFloat(process.env.MIN_DEPOSIT) || 0.001, // 0.001 OG minimum
-    MAX_DEPOSIT: parseFloat(process.env.MAX_DEPOSIT) || 100, // 100 OG maximum
+    MIN_DEPOSIT: parseFloat(process.env.MIN_DEPOSIT) || 0.001, // 0.001 MON minimum
+    MAX_DEPOSIT: parseFloat(process.env.MAX_DEPOSIT) || 100, // 100 MON maximum
   }
 };
 

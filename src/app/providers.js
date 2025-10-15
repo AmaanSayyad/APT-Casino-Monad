@@ -9,7 +9,7 @@ import { NotificationProvider } from '@/components/NotificationSystem';
 import WalletConnectionGuard from '@/components/WalletConnectionGuard';
 import { ThemeProvider } from 'next-themes';
 import { WagmiProvider, createConfig, http } from 'wagmi';
-import { ogGalileo } from '@/config/chains';
+import { monadTestnet } from '@/config/chains';
 import { RainbowKitProvider, getDefaultConfig, connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { 
   metaMaskWallet,
@@ -108,43 +108,54 @@ export default function Providers({ children }) {
   console.log('🔧 Providers mounting...');
   console.log('🔧 Project ID: 226b43b703188d269fb70d02c107c34e');
 
-  // RainbowKit configuration for 0G Galileo only
+  // RainbowKit configuration for Monad Testnet
   let config;
   
   try {
     config = getDefaultConfig({
-      appName: 'APT Casino',
+      appName: 'APT Casino Monad',
       projectId: '226b43b703188d269fb70d02c107c34e',
-      chains: [ogGalileo],
+      chains: [monadTestnet],
       ssr: true,
     });
     console.log('🔧 Config created with getDefaultConfig:', config);
   } catch (error) {
     console.error('❌ Error creating config with getDefaultConfig:', error);
     
-    // Fallback to manual config
+    // Fallback to manual config with MetaMask Smart Accounts support
     const connectors = connectorsForWallets([
       {
-        groupName: 'Popular',
+        groupName: 'Recommended',
         wallets: [
-          metaMaskWallet,
+          metaMaskWallet({
+            projectId: '226b43b703188d269fb70d02c107c34e',
+            // Enable Smart Accounts support
+            options: {
+              enableSmartAccounts: true,
+            }
+          }),
           walletConnectWallet,
           injectedWallet,
+        ],
+      },
+      {
+        groupName: 'Other',
+        wallets: [
           rainbowWallet,
           coinbaseWallet,
           trustWallet,
         ],
       },
     ], {
-      appName: 'APT Casino',
+      appName: 'APT Casino Monad',
       projectId: '226b43b703188d269fb70d02c107c34e',
     });
 
     config = createConfig({
       connectors,
-      chains: [ogGalileo],
+      chains: [monadTestnet],
       transports: {
-        [ogGalileo.id]: http(),
+        [monadTestnet.id]: http(),
       },
       ssr: true,
     });

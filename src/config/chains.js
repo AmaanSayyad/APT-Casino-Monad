@@ -5,32 +5,32 @@
 
 import { defineChain } from 'viem';
 
-// 0G Galileo Testnet Chain Definition
-export const ogGalileo = defineChain({
-  id: 16602,
-  name: '0G-Galileo-Testnet',
+// Monad Testnet Chain Definition
+export const monadTestnet = defineChain({
+  id: 10143,
+  name: 'Monad Testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'OG',
-    symbol: 'OG',
+    name: 'Monad',
+    symbol: 'MON',
   },
   rpcUrls: {
     default: {
-      http: ['https://evmrpc-testnet.0g.ai'],
+      http: ['https://testnet-rpc.monad.xyz'],
     },
     public: {
-      http: ['https://evmrpc-testnet.0g.ai'],
+      http: ['https://testnet-rpc.monad.xyz'],
     },
   },
   blockExplorers: {
     default: {
-      name: '0G Galileo Explorer',
-      url: 'https://chainscan-galileo.0g.ai',
+      name: 'Monad Testnet Explorer',
+      url: 'https://explorer.testnet.monad.xyz',
     },
   },
   testnet: true,
 });
 
 export default {
-  ogGalileo,
+  monadTestnet,
 };

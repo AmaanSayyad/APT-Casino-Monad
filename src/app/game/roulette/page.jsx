@@ -41,8 +41,8 @@ import pythEntropyService from '@/services/PythEntropyService';
 // Casino module address for Ethereum
 const CASINO_MODULE_ADDRESS = "0x1234567890123456789012345678901234567890123456789012345678901234";
 
-const parseOGAmount = (amount) => {
-  // Parse OG amount
+const parseMONAmount = (amount) => {
+  // Parse MON amount
   return parseFloat(amount);
 };
 
@@ -1104,8 +1104,8 @@ export default function GameRoulette() {
                       <FaCoins className="text-yellow-400" />
                     </div>
                     <div className="text-xs text-white/50 font-sans text-center">Volume</div>
-                    <div className="text-white font-display text-sm md:text-base truncate w-full text-center" title={`${gameStatistics.totalVolume} OG`}>
-                      {gameStatistics.totalVolume} OG
+                    <div className="text-white font-display text-sm md:text-base truncate w-full text-center" title={`${gameStatistics.totalVolume} MON`}>
+                      {gameStatistics.totalVolume} MON
                     </div>
                   </div>
 
@@ -1114,8 +1114,8 @@ export default function GameRoulette() {
                       <FaTrophy className="text-yellow-500" />
                     </div>
                     <div className="text-xs text-white/50 font-sans text-center">Max Win</div>
-                    <div className="text-white font-display text-sm md:text-base truncate w-full text-center" title={`${gameStatistics.maxWin} OG`}>
-                      {gameStatistics.maxWin} OG
+                    <div className="text-white font-display text-sm md:text-base truncate w-full text-center" title={`${gameStatistics.maxWin} MON`}>
+                      {gameStatistics.maxWin} MON
                     </div>
                   </div>
                 </motion.div>
@@ -1199,7 +1199,7 @@ export default function GameRoulette() {
   const { balance } = useToken(address); // Keep for compatibility
   const HOUSE_ADDR = CASINO_MODULE_ADDRESS;
 
-  // Function to fetch real OG balance will be defined after useSelector
+  // Function to fetch real MON balance will be defined after useSelector
 
   // Sound refs
   const spinSoundRef = useRef(null);
@@ -1366,7 +1366,7 @@ export default function GameRoulette() {
   const dispatch = useDispatch();
   const { userBalance, isLoading: isLoadingBalance } = useSelector((state) => state.balance);
 
-  // Function to fetch real OG balance
+  // Function to fetch real MON balance
   const fetchRealBalance = useCallback(async () => {
     if (!account?.address) return;
 
@@ -1607,11 +1607,11 @@ export default function GameRoulette() {
     }
 
     // Check Redux balance instead of wallet
-    const currentBalance = parseFloat(userBalance || '0'); // Balance is already in OG
+    const currentBalance = parseFloat(userBalance || '0'); // Balance is already in MON
     const totalBetAmount = total;
 
     if (currentBalance < totalBetAmount) {
-      alert(`Insufficient balance. You have ${currentBalance.toFixed(5)} OG but need ${totalBetAmount.toFixed(5)} OG`);
+      alert(`Insufficient balance. You have ${currentBalance.toFixed(5)} MON but need ${totalBetAmount.toFixed(5)} MON`);
       return;
     }
 
@@ -1633,7 +1633,7 @@ export default function GameRoulette() {
       
       // Check if user has enough balance
       if (originalBalance < totalBetAmount) {
-        alert(`Insufficient balance. You have ${originalBalance.toFixed(5)} OG but need ${totalBetAmount.toFixed(5)} OG`);
+        alert(`Insufficient balance. You have ${originalBalance.toFixed(5)} MON but need ${totalBetAmount.toFixed(5)} MON`);
         setSubmitDisabled(false);
         setWheelSpinning(false);
         return;
@@ -2051,7 +2051,7 @@ export default function GameRoulette() {
                 sessionId: entropyResult.entropyProof.requestId || `roulette_${Date.now()}`,
                 gameType: 'ROULETTE',
                 channelId: entropyResult.entropyProof.requestId || 'entropy_channel',
-                valueOg: 0
+                valueMon: 0
               })
             })
               .then(async (r) => {
@@ -2089,16 +2089,16 @@ export default function GameRoulette() {
         // Show result notification
         if (netResult > 0) {
           const winMessage = winningBets.length === 1
-                    ? `🎉 WINNER! ${winningBets[0].name} - You won ${(netResult - totalBetAmount).toFixed(5)} OG!`
-                    : `🎉 MULTIPLE WINNERS! ${winningBets.length} bets won - Total: ${(netResult - totalBetAmount).toFixed(5)} OG!`;
+                    ? `🎉 WINNER! ${winningBets[0].name} - You won ${(netResult - totalBetAmount).toFixed(5)} MON!`
+                    : `🎉 MULTIPLE WINNERS! ${winningBets.length} bets won - Total: ${(netResult - totalBetAmount).toFixed(5)} MON!`;
 
           setNotificationMessage(winMessage);
           setNotificationSeverity("success");
           setSnackbarMessage(winMessage);
         } else {
-          setNotificationMessage(`💸 Number ${winningNumber} - You lost ${totalBetAmount.toFixed(5)} OG!`);
+          setNotificationMessage(`💸 Number ${winningNumber} - You lost ${totalBetAmount.toFixed(5)} MON!`);
           setNotificationSeverity("error");
-          setSnackbarMessage(`💸 Number ${winningNumber} - You lost ${totalBetAmount.toFixed(5)} OG!`);
+          setSnackbarMessage(`💸 Number ${winningNumber} - You lost ${totalBetAmount.toFixed(5)} MON!`);
         }
         setSnackbarOpen(true);
 
@@ -2609,7 +2609,7 @@ export default function GameRoulette() {
               }}
             >
               <FaCoins className="text-yellow-400" />
-              Balance: {isConnected ? `${parseFloat(userBalance || '0').toFixed(5)} OG` : 'Connect Wallet'}
+              Balance: {isConnected ? `${parseFloat(userBalance || '0').toFixed(5)} MON` : 'Connect Wallet'}
             </Typography>
           </Box>
 
@@ -3163,7 +3163,7 @@ export default function GameRoulette() {
               />
 
               <Typography color="white" sx={{ opacity: 0.8 }}>
-                Current Bet Total: {total.toFixed(5)} OG
+                Current Bet Total: {total.toFixed(5)} MON
               </Typography>
 
               {/* Quick Bet Buttons */}
@@ -3248,7 +3248,7 @@ export default function GameRoulette() {
                       loading={submitDisabled}
                       onClick={lockBet}
                     >
-                      {total > 0 ? `Place Bet (${total.toFixed(5)} ETH)` : 'Place Bet (ETH)'}
+                      {total > 0 ? `Place Bet (${total.toFixed(5)} MON)` : 'Place Bet (MON)'}
                     </Button>
                     {submitDisabled && rollResult < 0 && (
                       <Typography color="white" sx={{ opacity: 0.8 }}>
@@ -3590,9 +3590,9 @@ export default function GameRoulette() {
             {notificationIndex === notificationSteps.RESULT_READY && (
               <Typography>
                 {winnings > 0
-                  ? `🎉 You won ${winnings.toFixed(4)} OG!`
+                  ? `🎉 You won ${winnings.toFixed(4)} MON!`
                   : winnings < 0
-                  ? `💸 You lost ${Math.abs(winnings).toFixed(4)} OG!`
+                  ? `💸 You lost ${Math.abs(winnings).toFixed(4)} MON!`
                   : "🤝 Break even!"}
               </Typography>
             )}

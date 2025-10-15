@@ -1,46 +1,46 @@
 /**
- * 0G Galileo Testnet Configuration
- * Configuration for 0G Galileo testnet with OG token
+ * Monad Testnet Testnet Configuration
+ * Configuration for Monad Testnet testnet with MON token
  */
 
-// 0G Galileo Chain Configuration
-export const OG_GALILEO_CONFIG = {
+// Monad Testnet Chain Configuration
+export const MONAD_TESTNET_CONFIG = {
   chainId: 16602,
-  name: '0G-Galileo-Testnet',
-  network: 'og-galileo-testnet',
+  name: 'monad-testnet-Testnet',
+  network: 'monad-testnet-testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'OG',
-    symbol: 'OG',
+    name: 'MON',
+    symbol: 'MON',
   },
   rpcUrls: {
     default: {
       http: [
-        process.env.NEXT_PUBLIC_0G_GALILEO_RPC || 'https://evmrpc-testnet.0g.ai',
+        process.env.NEXT_PUBLIC_0G_GALILEO_RPC || 'https://testnet-rpc.monad.xyz',
         process.env.NEXT_PUBLIC_0G_GALILEO_RPC_FALLBACK || 'https://evm-rpc-galileo.0g.ai'
       ],
     },
     public: {
       http: [
-        'https://evmrpc-testnet.0g.ai',
+        'https://testnet-rpc.monad.xyz',
         'https://evm-rpc-galileo.0g.ai'
       ],
     },
   },
   blockExplorers: {
     default: {
-      name: '0G Galileo Explorer',
-      url: process.env.NEXT_PUBLIC_0G_GALILEO_EXPLORER || 'https://chainscan-galileo.0g.ai',
+      name: 'Monad Testnet Explorer',
+      url: process.env.NEXT_PUBLIC_0G_GALILEO_EXPLORER || 'https://explorer.testnet.monad.xyz',
     },
   },
   testnet: true,
 };
 
-// 0G Galileo Tokens
-export const OG_GALILEO_TOKENS = {
-  OG: {
-    symbol: 'OG',
-    name: 'OG Token',
+// Monad Testnet Tokens
+export const MONAD_TESTNET_TOKENS = {
+  MON: {
+    symbol: 'MON',
+    name: 'MON token',
     decimals: 18,
     address: '0x0000000000000000000000000000000000000000',
     isNative: true,
@@ -49,13 +49,13 @@ export const OG_GALILEO_TOKENS = {
   }
 };
 
-// Casino configuration for 0G Galileo
-export const OG_GALILEO_CASINO_CONFIG = {
+// Casino configuration for Monad Testnet
+export const MONAD_TESTNET_CASINO_CONFIG = {
   // Deposit/Withdraw settings
-  minDeposit: '0.001', // 0.001 OG
-  maxDeposit: '100',   // 100 OG
-  minWithdraw: '0.001', // 0.001 OG
-  maxWithdraw: '100',   // 100 OG
+  minDeposit: '0.001', // 0.001 MON
+  maxDeposit: '100',   // 100 MON
+  minWithdraw: '0.001', // 0.001 MON
+  maxWithdraw: '100',   // 100 MON
   
   // Game settings (same as Arbitrum for consistency)
   games: {
@@ -86,14 +86,14 @@ export const OG_GALILEO_CASINO_CONFIG = {
   }
 };
 
-// Network switching helper for 0G Galileo
+// Network switching helper for Monad Testnet
 export const switchToOGGalileo = async () => {
   if (typeof window === 'undefined' || !window.ethereum) {
     throw new Error('MetaMask not found');
   }
 
   try {
-    // Try to switch to 0G Galileo
+    // Try to switch to Monad Testnet
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: '0x40da' }], // 16602 in hex
@@ -105,14 +105,14 @@ export const switchToOGGalileo = async () => {
         method: 'wallet_addEthereumChain',
         params: [{
           chainId: '0x40da',
-          chainName: '0G-Galileo-Testnet',
+          chainName: 'monad-testnet-Testnet',
           nativeCurrency: {
-            name: 'OG',
-            symbol: 'OG',
+            name: 'MON',
+            symbol: 'MON',
             decimals: 18,
           },
-          rpcUrls: ['https://evmrpc-testnet.0g.ai'],
-          blockExplorerUrls: ['https://chainscan-galileo.0g.ai'],
+          rpcUrls: ['https://testnet-rpc.monad.xyz'],
+          blockExplorerUrls: ['https://explorer.testnet.monad.xyz'],
         }],
       });
     } else {
@@ -121,4 +121,4 @@ export const switchToOGGalileo = async () => {
   }
 };
 
-export default OG_GALILEO_CONFIG;
+export default MONAD_TESTNET_CONFIG;

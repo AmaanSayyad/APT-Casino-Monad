@@ -15,8 +15,24 @@ const SmartAccountInfo = () => {
 
       try {
         // Check if the connected account is a smart account
-        const code = await walletClient.getBytecode({ address });
-        const hasCode = code && code !== '0x';
+        let code = '0x';
+        try {
+          if (walletClient.getBytecode) {
+            code = await walletClient.getBytecode({ address });
+          } else if (walletClient.getCode) {
+            code = await walletClient.getCode({ address });
+          } else if (window.ethereum) {
+            code = await window.ethereum.request({
+              method: 'eth_getCode',
+              params: [address, 'latest']
+            });
+          }
+        } catch (codeError) {
+          console.warn('Could not get bytecode:', codeError);
+          code = '0x';
+        }
+        
+        const hasCode = code && code !== '0x' && code.length > 2;
         setIsSmartAccount(hasCode);
 
         if (hasCode) {

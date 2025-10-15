@@ -682,7 +682,7 @@ export default function Home() {
               setGameMode={setGameMode}
               betAmount={betAmount}
               setBetAmount={setBetAmount}
-              balance MON
+              balance={parseFloat(userBalance || '0')}
               manulBet={manulBet}
               risk={selectedRisk}
               setRisk={setSelectedRisk}

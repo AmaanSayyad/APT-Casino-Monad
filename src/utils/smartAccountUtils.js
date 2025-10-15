@@ -82,8 +82,28 @@ export const getSmartAccountInfo = async (address, walletClient) => {
 
   try {
     // Get account code to determine if it's a smart account
-    const code = await walletClient.getBytecode({ address });
-    const isSmartAccount = code && code !== '0x';
+    let code = '0x';
+    let isSmartAccount = false;
+
+    try {
+      // Try different methods to get bytecode
+      if (walletClient.getBytecode) {
+        code = await walletClient.getBytecode({ address });
+      } else if (walletClient.getCode) {
+        code = await walletClient.getCode({ address });
+      } else if (window.ethereum) {
+        // Fallback to direct ethereum provider call
+        code = await window.ethereum.request({
+          method: 'eth_getCode',
+          params: [address, 'latest']
+        });
+      }
+      
+      isSmartAccount = code && code !== '0x' && code.length > 2;
+    } catch (codeError) {
+      console.warn('Could not get bytecode, assuming EOA:', codeError);
+      isSmartAccount = false;
+    }
 
     if (!isSmartAccount) {
       return {
@@ -112,7 +132,12 @@ export const getSmartAccountInfo = async (address, walletClient) => {
     };
   } catch (error) {
     console.error('Error getting Smart Account info:', error);
-    return null;
+    // Return EOA as fallback
+    return {
+      address,
+      type: 'EOA',
+      isSmartAccount: false
+    };
   }
 };
 

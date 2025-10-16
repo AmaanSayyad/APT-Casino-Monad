@@ -250,18 +250,16 @@ const RouletteHistory = ({ bettingHistory = [] }) => {
     return redNumbers.includes(num) ? '#d82633' : '#333'; // Red or black
   };
 
-  // Open Arbiscan link for transaction hash
-  const openArbiscan = (hash) => {
+  // Open Monad Explorer link for transaction hash
+  const openMonadExplorer = (hash) => {
     if (hash && hash !== 'unknown') {
-      const network = process.env.NEXT_PUBLIC_NETWORK || 'arbitrum-sepolia';
+      const network = process.env.NEXT_PUBLIC_NETWORK || 'monad-testnet';
       let explorerUrl;
       
-      if (network === 'arbitrum-sepolia') {
-        explorerUrl = `https://sepolia.arbiscan.io/tx/${hash}`;
-      } else if (network === 'arbitrum-one') {
-        explorerUrl = `https://arbiscan.io/tx/${hash}`;
+      if (network === 'monad-testnet') {
+        explorerUrl = `https://testnet.monadexplorer.com/tx/${hash}`;
       } else {
-        explorerUrl = `https://sepolia.etherscan.io/tx/${hash}`;
+        explorerUrl = `https://testnet.monadexplorer.com/tx/${hash}`;
       }
       
       window.open(explorerUrl, '_blank');
@@ -271,7 +269,7 @@ const RouletteHistory = ({ bettingHistory = [] }) => {
   // Open Entropy Explorer link
   const openEntropyExplorer = (txHash) => {
     if (txHash) {
-      const entropyExplorerUrl = `https://entropy-explorer.pyth.network/?chain=arbitrum-sepolia&search=${txHash}`;
+      const entropyExplorerUrl = `https://entropy-explorer.pyth.network/?chain=monad-testnet&search=${txHash}`;
       window.open(entropyExplorerUrl, '_blank');
     }
   };
@@ -583,6 +581,35 @@ const RouletteHistory = ({ bettingHistory = [] }) => {
                                     <FaExternalLinkAlt size={10} color="#681DDB" />
                                     <Typography variant="caption" sx={{ color: '#681DDB', fontSize: '0.7rem', fontWeight: 'bold' }}>
                                       Entropy
+                                    </Typography>
+                                  </Box>
+                                )}
+                                {(bet.entropyProof?.monadExplorerUrl || bet.vrfProof?.transactionHash) && (
+                                  <Box
+                                    onClick={() => {
+                                      const url = bet.entropyProof?.monadExplorerUrl || 
+                                                 `https://testnet.monadexplorer.com/tx/${bet.vrfProof?.transactionHash}`;
+                                      window.open(url, '_blank');
+                                    }}
+                                    sx={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 0.5,
+                                      cursor: 'pointer',
+                                      padding: '2px 6px',
+                                      borderRadius: '4px',
+                                      backgroundColor: 'rgba(139, 35, 152, 0.1)',
+                                      border: '1px solid rgba(139, 35, 152, 0.3)',
+                                      transition: 'all 0.2s ease',
+                                      '&:hover': {
+                                        backgroundColor: 'rgba(139, 35, 152, 0.2)',
+                                        transform: 'scale(1.05)'
+                                      }
+                                    }}
+                                  >
+                                    <FaExternalLinkAlt size={10} color="#8B2398" />
+                                    <Typography variant="caption" sx={{ color: '#8B2398', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                                      Monad
                                     </Typography>
                                   </Box>
                                 )}

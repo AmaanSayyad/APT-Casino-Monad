@@ -2026,7 +2026,7 @@ export default function GameRoulette() {
             sequenceNumber: entropyResult.entropyProof.sequenceNumber,
             randomValue: entropyResult.randomValue,
             transactionHash: entropyResult.entropyProof.transactionHash,
-            arbiscanUrl: entropyResult.entropyProof.arbiscanUrl,
+            monadExplorerUrl: entropyResult.entropyProof.monadExplorerUrl,
             explorerUrl: entropyResult.entropyProof.explorerUrl,
             timestamp: entropyResult.entropyProof.timestamp,
             source: 'Pyth Entropy'

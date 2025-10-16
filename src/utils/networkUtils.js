@@ -10,7 +10,7 @@ export const MONAD_TESTNET_CONFIG = {
     decimals: 18,
   },
   rpcUrls: ['https://testnet-rpc.monad.xyz'],
-  blockExplorerUrls: ['https://explorer.testnet.monad.xyz'],
+  blockExplorerUrls: ['https://testnet.monadexplorer.com'],
 };
 
 export const switchToMonadTestnet = async () => {
@@ -51,5 +51,5 @@ export const formatMonBalance = (balance, decimals = 5) => {
 };
 
 export const getMonadTestnetExplorerUrl = (txHash) => {
-  return `https://explorer.testnet.monad.xyz/tx/${txHash}`;
+  return `https://testnet.monadexplorer.com/tx/${txHash}`;
 };

@@ -11,20 +11,10 @@ const MinesHistory = ({ gameHistory = [], userStats = {} }) => {
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
 
-  // Open Arbiscan link for transaction hash
-  const openArbiscan = (hash) => {
+  // Open Monad Explorer link for transaction hash
+  const openMonadExplorer = (hash) => {
     if (hash && hash !== 'unknown') {
-      const network = process.env.NEXT_PUBLIC_NETWORK || 'arbitrum-sepolia';
-      let explorerUrl;
-      
-      if (network === 'arbitrum-sepolia') {
-        explorerUrl = `https://sepolia.arbiscan.io/tx/${hash}`;
-      } else if (network === 'arbitrum-one') {
-        explorerUrl = `https://arbiscan.io/tx/${hash}`;
-      } else {
-        explorerUrl = `https://sepolia.etherscan.io/tx/${hash}`;
-      }
-      
+      const explorerUrl = `https://testnet.monadexplorer.com/tx/${hash}`;
       window.open(explorerUrl, '_blank');
     }
   };
@@ -32,7 +22,7 @@ const MinesHistory = ({ gameHistory = [], userStats = {} }) => {
   // Open Entropy Explorer link
   const openEntropyExplorer = (txHash) => {
     if (txHash) {
-      const entropyExplorerUrl = `https://entropy-explorer.pyth.network/?chain=arbitrum-sepolia&search=${txHash}`;
+      const entropyExplorerUrl = `https://entropy-explorer.pyth.network/?chain=monad-testnet&search=${txHash}`;
       window.open(entropyExplorerUrl, '_blank');
     }
   };
@@ -324,13 +314,17 @@ const MinesHistory = ({ gameHistory = [], userStats = {} }) => {
                       <div className="text-yellow-400 font-bold">{game.entropyProof.sequenceNumber && game.entropyProof.sequenceNumber !== '0' ? String(game.entropyProof.sequenceNumber) : ''}</div>
                     </div>
                     <div className="flex gap-1">
-                      {game.entropyProof.arbiscanUrl && (
+                      {(game.entropyProof.monadExplorerUrl || game.entropyProof.transactionHash) && (
                         <button
-                          onClick={() => window.open(game.entropyProof.arbiscanUrl, '_blank')}
-                          className="flex items-center gap-1 px-2 py-1 bg-blue-500/10 border border-blue-500/30 rounded text-blue-400 text-xs hover:bg-blue-500/20 transition-colors"
+                          onClick={() => {
+                            const url = game.entropyProof.monadExplorerUrl || 
+                                       `https://testnet.monadexplorer.com/tx/${game.entropyProof.transactionHash}`;
+                            window.open(url, '_blank');
+                          }}
+                          className="flex items-center gap-1 px-2 py-1 bg-[#8B2398]/10 border border-[#8B2398]/30 rounded text-[#8B2398] text-xs hover:bg-[#8B2398]/20 transition-colors"
                         >
                           <FaExternalLinkAlt size={8} />
-                          Arbiscan
+                          Monad
                         </button>
                       )}
                       {game.entropyProof.transactionHash && (

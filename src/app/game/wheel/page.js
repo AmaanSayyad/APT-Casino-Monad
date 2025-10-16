@@ -117,7 +117,7 @@ export default function Home() {
                 randomValue: entropyResult.randomValue,
                 randomNumber: entropyResult.randomValue,
                 transactionHash: entropyResult.entropyProof?.transactionHash,
-                arbiscanUrl: entropyResult.entropyProof?.arbiscanUrl,
+                monadExplorerUrl: entropyResult.entropyProof?.monadExplorerUrl,
                 explorerUrl: entropyResult.entropyProof?.explorerUrl,
                 timestamp: entropyResult.entropyProof?.timestamp,
                 source: 'Pyth Entropy'
@@ -224,8 +224,8 @@ export default function Home() {
             randomValue: Math.floor(Math.random() * 1000000),
             randomNumber: Math.floor(Math.random() * 1000000),
             transactionHash: 'generating...',
-            arbiscanUrl: 'https://sepolia.arbiscan.io/',
-            explorerUrl: 'https://entropy-explorer.pyth.network/?chain=arbitrum-sepolia',
+            monadExplorerUrl: 'https://testnet.monadexplorer.com/',
+            explorerUrl: 'https://entropy-explorer.pyth.network/?chain=monad-testnet',
             timestamp: Date.now(),
             source: 'Generating...'
           };

@@ -5,7 +5,7 @@ import PYTH_ENTROPY_CONFIG from '@/config/pythEntropy.js';
 
 export async function GET() {
   try {
-    const network = process.env.NEXT_PUBLIC_NETWORK || 'arbitrum-sepolia';
+    const network = process.env.NEXT_PUBLIC_NETWORK || 'monad-testnet';
     const networkConfig = PYTH_ENTROPY_CONFIG.getNetworkConfig(network);
     
     if (!networkConfig) {

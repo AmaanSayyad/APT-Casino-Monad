@@ -337,7 +337,7 @@ const RouletteWithHistory = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800"
-                  title="View on Arbiscan"
+                  title="View on Monad Explorer"
                 >
                   <ExternalLink size={14} />
                 </a>

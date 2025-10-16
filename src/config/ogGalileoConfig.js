@@ -30,7 +30,7 @@ export const MONAD_TESTNET_CONFIG = {
   blockExplorers: {
     default: {
       name: 'Monad Testnet Explorer',
-      url: process.env.NEXT_PUBLIC_0G_GALILEO_EXPLORER || 'https://explorer.testnet.monad.xyz',
+      url: process.env.NEXT_PUBLIC_0G_GALILEO_EXPLORER || 'https://testnet.monadexplorer.com',
     },
   },
   testnet: true,
@@ -112,7 +112,7 @@ export const switchToOGGalileo = async () => {
             decimals: 18,
           },
           rpcUrls: ['https://testnet-rpc.monad.xyz'],
-          blockExplorerUrls: ['https://explorer.testnet.monad.xyz'],
+          blockExplorerUrls: ['https://testnet.monadexplorer.com'],
         }],
       });
     } else {

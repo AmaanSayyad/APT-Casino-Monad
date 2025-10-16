@@ -14,7 +14,7 @@ export const TREASURY_CONFIG = {
     CHAIN_ID: '0x279f', // Monad testnet (10143 in hex)
     CHAIN_NAME: 'Monad Testnet',
     RPC_URL: process.env.NEXT_PUBLIC_MONAD_TESTNET_RPC || 'https://testnet-rpc.monad.xyz',
-    EXPLORER_URL: process.env.NEXT_PUBLIC_MONAD_TESTNET_EXPLORER || 'https://explorer.testnet.monad.xyz'
+    EXPLORER_URL: process.env.NEXT_PUBLIC_MONAD_TESTNET_EXPLORER || 'https://testnet.monadexplorer.com'
   },
   
   // Gas settings for transactions

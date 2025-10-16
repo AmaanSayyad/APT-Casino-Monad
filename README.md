@@ -31,7 +31,7 @@ Add Monad Testnet to MetaMask:
 - **RPC URL**: `https://testnet-rpc.monad.xyz`
 - **Chain ID**: `10143`
 - **Currency Symbol**: `MON`
-- **Block Explorer**: `https://explorer.testnet.monad.xyz`
+- **Block Explorer**: `https://testnet.monadexplorer.com`
 
 ## 🔷 Smart Accounts
 

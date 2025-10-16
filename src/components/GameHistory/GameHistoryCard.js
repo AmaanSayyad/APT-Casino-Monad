@@ -37,15 +37,13 @@ const GameHistoryCard = ({ game, gameType }) => {
   };
 
   const openTransaction = (txHash, logIndex) => {
-    const network = process.env.NEXT_PUBLIC_NETWORK || 'arbitrum-sepolia';
+    const network = process.env.NEXT_PUBLIC_NETWORK || 'monad-testnet';
     let explorerUrl;
     
-    if (network === 'arbitrum-sepolia') {
-      explorerUrl = `https://sepolia.arbiscan.io/tx/${txHash}#eventlog`;
-    } else if (network === 'arbitrum-one') {
-      explorerUrl = `https://arbiscan.io/tx/${txHash}#eventlog`;
+    if (network === 'monad-testnet') {
+      explorerUrl = `https://testnet.monadexplorer.com/tx/${txHash}#eventlog`;
     } else {
-      explorerUrl = `https://sepolia.etherscan.io/tx/${txHash}#eventlog`;
+      explorerUrl = `https://testnet.monadexplorer.com/tx/${txHash}#eventlog`;
     }
     
     window.open(explorerUrl, '_blank');
@@ -203,21 +201,21 @@ const GameHistoryCard = ({ game, gameType }) => {
                 Links:
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
-                {game?.entropyProof?.arbiscanUrl && (
+                {game?.entropyProof?.monadExplorerUrl && (
                   <Button
                     size="small"
                     variant="outlined"
                     startIcon={<ExternalLink size={12} />}
-                    onClick={() => window.open(game.entropyProof.arbiscanUrl, '_blank')}
+                    onClick={() => window.open(game.entropyProof.monadExplorerUrl, '_blank')}
                     sx={{
-                      color: '#3B82F6',
-                      borderColor: '#3B82F6',
+                      color: '#8B2398',
+                      borderColor: '#8B2398',
                       fontSize: '0.75rem',
                       py: 0.5,
                       px: 1
                     }}
                   >
-                    Arbiscan
+                    Monad
                   </Button>
                 )}
                 {entropyTransactionHash && (

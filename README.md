@@ -30,7 +30,11 @@ The traditional online gambling industry suffers from several issues:
 
 APT Casino addresses these problems by offering:
 
-- **Provably Fair Gaming**: Powered by Pyth Entropy on Arbitrum Sepolia
+- **Provably Fair Gaming**: Powered by Pyth Entropy
+
+![commit_and_reveal](https://github.com/user-attachments/assets/cbb150e8-7d22-4903-9729-8ad00c20f1d5)
+
+
 - **Multiple Games**: Wheel, Roulette, Plinko, and Mines with verifiable outcomes
 - **MetaMask Smart Accounts**: Enhanced wallet experience with batch transactions
 - **MON Token**: Native currency for Monad Testnet
@@ -51,6 +55,7 @@ APT Casino addresses these problems by offering:
 - **Enhanced Security**: Smart contract-based accounts
 
 ### 2. Provably Fair Gaming
+<img width="1536" height="864" alt="355232251-6880e1cb-769c-4272-8b66-686a90abf3be" src="https://github.com/user-attachments/assets/98cefec7-18d6-4ede-92a9-0a237686f2cf" />
 
 - **Pyth Entropy**: Cryptographically secure randomness
 - **On-Chain Verification**: All game outcomes verifiable

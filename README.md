@@ -18,11 +18,13 @@ This frustrating experience inspired APT Casino: a combination of GameFi, AI, an
 
 The traditional online gambling industry suffers from several issues:
 
-- **Unfair Game Outcomes**: Many platforms manipulate results for unfair play
+- **Unfair Game Outcomes**: 99% of platforms manipulate game results, leading to unfair play
 - **High Fees**: Exorbitant charges for deposits, withdrawals, and gameplay
 - **Restrictive Withdrawal Policies**: Conditions that prevent users from accessing their funds
 - **Misleading Bonus Schemes**: Trapping users with unrealistic wagering requirements
 - **Lack of True Asset Ownership**: Centralized control over user funds
+- **User Adoption Barriers**: Complexity of using wallets creates friction for web2 users
+- **No Social Layer**: Lack of live streaming, community chat, and collaborative experiences
 
 ## 💡 Our Solution
 
@@ -35,6 +37,9 @@ APT Casino addresses these problems by offering:
 - **Flexible Withdrawal**: Unrestricted access to funds
 - **Transparent Bonuses**: Clear terms without hidden traps
 - **True Asset Ownership**: Decentralized asset management
+- **Live Streaming Integration**: Built with Livepeer, enabling real-time game streams and tournaments
+- **On-Chain Chat**: Supabase + Socket.IO with wallet-signed messages for verifiable player communication
+- **Gasless Gaming Experience**: Treasury-sponsored transactions for seamless web2-like experience
 
 ## 🌟 Key Features
 
@@ -62,6 +67,19 @@ APT Casino addresses these problems by offering:
 - **Mines**: Strategic mine-sweeping with delegated pattern betting
 - **Plinko**: Physics-based ball drop with auto-betting features
 - **Wheel**: Classic spinning wheel with multiple risk levels
+
+### 5. Social Features
+
+- **Live Streaming**: Integrated with Livepeer for real-time game streams and tournaments
+- **On-Chain Chat**: Real-time communication with wallet-signed messages
+- **Player Profiles**: NFT-based profiles with gaming history and achievements
+- **Community Events**: Tournaments and collaborative gaming experiences
+
+### 6. Web2 User Experience
+
+- **Gasless Transactions**: Treasury-sponsored transactions eliminate gas fees
+- **Seamless Onboarding**: Simplified wallet experience for web2 users
+- **Familiar Interface**: Web2-like experience with web3 benefits
 
 ## 🚀 Getting Started
 
@@ -126,6 +144,8 @@ graph TB
         B --> D[Material-UI]
         B --> E[RainbowKit + MetaMask Smart Accounts]
         E --> SA[Smart Account Detection]
+        B --> LS[Livepeer Streaming]
+        B --> CC[Community Chat]
     end
     
     subgraph State["State Management"]
@@ -139,12 +159,15 @@ graph TB
         I --> K[Deposit/Withdraw MON]
         I --> L[Game Logic]
         I --> SAA[Smart Account API]
+        I --> SC[Socket.IO Chat]
+        I --> LP[Livepeer API]
     end
     
     subgraph Gaming["Gaming Network - Monad Testnet"]
         MT[Monad Testnet] --> MON[MON Token]
         MT --> DEP[Deposits/Withdrawals]
         MT --> SA_BATCH[Batch Transactions]
+        MT --> GAS[Gasless Transactions]
     end
     
     subgraph Entropy["Entropy Network - Arbitrum Sepolia"]
@@ -155,9 +178,18 @@ graph TB
     
     subgraph Data["Data Layer"]
         Q[PostgreSQL] --> R[User Data]
+        Q --> CH[Chat History]
+        Q --> PF[Player Profiles]
         S[Redis Cache] --> T[Session Data]
         S --> U[Game State]
         S --> SAC[Smart Account Cache]
+        S --> LV[Live Streams]
+    end
+    
+    subgraph Social["Social Layer"]
+        LP[Livepeer] --> ST[Streaming]
+        SB[Supabase] --> RT[Real-time Chat]
+        SIO[Socket.IO] --> MS[Message Signing]
     end
     
     A --> F
@@ -168,6 +200,11 @@ graph TB
     I --> S
     N --> I
     SA --> SAA
+    CC --> SC
+    LS --> LP
+    SC --> SB
+    SC --> SIO
+    LP --> ST
 ```
 
 ## 🔗 Wallet Connection & Smart Account Flow
@@ -346,6 +383,7 @@ sequenceDiagram
     participant SC as Smart Contract (Arbitrum)
     participant PE as Pyth Entropy
     participant DB as Database
+    participant LP as Livepeer
     
     U->>SA: Initiate Game Session
     SA->>UI: Check Account Type
@@ -379,6 +417,12 @@ sequenceDiagram
     end
     
     UI->>U: Display Outcome(s)
+    
+    opt Live Streaming Enabled
+        U->>LP: Start Stream
+        LP->>UI: Stream Available
+        UI->>DB: Record Stream Data
+    end
 ```
 
 ## 🎯 Smart Account Gaming Benefits
@@ -465,120 +509,29 @@ sequenceDiagram
     Note over U,PE: Single transaction for multiple games!
 ```
 
-## 📊 Performance Comparison: EOA vs Smart Account
+
+## 🎯 Game Integration with Smart Accounts & Pyth Entropy
 
 ```mermaid
-graph LR
-    subgraph Metrics["Performance Metrics"]
-        subgraph EOA_Perf["EOA Performance"]
-            E1[1 Game = 1 TX]
-            E2[Manual Confirmations]
-            E3[Higher Gas per Game]
-            E4[Slower UX]
-        end
-        
-        subgraph SA_Perf["Smart Account Performance"]
-            S1[5 Games = 1 TX]
-            S2[Batch Confirmations]
-            S3[Optimized Gas]
-            S4[Faster UX]
-        end
-    end
+flowchart TD
+    A[User Selects Game] --> B{Smart Account?}
+    B -->|Yes| C[Enable Batch Features]
+    B -->|No| D[Standard Gaming]
     
-    subgraph Comparison["Direct Comparison"]
-        subgraph Time["Time Efficiency"]
-            T1[EOA: 5 minutes for 5 games]
-            T2[Smart Account: 1 minute for 5 games]
-        end
-        
-        subgraph Cost["Cost Efficiency"]
-            C1[EOA: 5x Gas Costs]
-            C2[Smart Account: 1.2x Gas Cost]
-        end
-        
-        subgraph UX["User Experience"]
-            U1[EOA: 5 Confirmations]
-            U2[Smart Account: 1 Confirmation]
-        end
-    end
+    C --> E[Prepare Multiple Bets]
+    D --> F[Single Bet]
     
-    E1 --> T1
-    S1 --> T2
-    E3 --> C1
-    S3 --> C2
-    E2 --> U1
-    S2 --> U2
-```
-
-## 🎯 Game-Specific Flows
-
-### Mines Game Flow
-```mermaid
-stateDiagram-v2
-    [*] --> GridSetup
-    GridSetup --> BetPlacement
-    BetPlacement --> EntropyRequest
-    EntropyRequest --> MineGeneration
-    MineGeneration --> GameActive
+    E --> G[Batch Transaction]
+    F --> H[Standard Transaction]
     
-    GameActive --> TileClick
-    TileClick --> SafeTile: Safe
-    TileClick --> MineTile: Mine Hit
+    G --> I[Pyth Entropy Request]
+    H --> I
     
-    SafeTile --> ContinueGame: Continue
-    SafeTile --> CashOut: Cash Out
+    I --> J[Generate Verifiable Random Numbers]
+    J --> K[Process Game Outcomes]
     
-    ContinueGame --> GameActive
-    CashOut --> GameEnd
-    MineTile --> GameEnd
-    
-    GameEnd --> [*]
-```
-
-### Plinko Game Flow
-```mermaid
-graph TD
-    A[Drop Ball] --> B[Physics Engine]
-    B --> C[Pyth Entropy]
-    C --> D[Peg Collisions]
-    D --> E[Ball Path Calculation]
-    E --> F[Multiplier Zone]
-    F --> G[Payout Calculation]
-    
-    subgraph Physics["Physics Simulation"]
-        H[Matter.js] --> I[Gravity]
-        I --> J[Collision Detection]
-        J --> K[Bounce Physics]
-    end
-    
-    subgraph Visual["Visual Rendering"]
-        L[Three.js] --> M[3D Ball]
-        M --> N[Peg Animation]
-        N --> O[Trail Effects]
-    end
-    
-    B --> H
-    E --> L
-```
-
-### Roulette Game Flow
-```mermaid
-flowchart LR
-    A[Place Bets] --> B[Multiple Bet Types]
-    B --> C[Red/Black]
-    B --> D[Odd/Even]
-    B --> E[Numbers]
-    B --> F[Columns/Dozens]
-    
-    C --> G[Spin Wheel]
-    D --> G
-    E --> G
-    F --> G
-    
-    G --> H[Pyth Entropy Random 0-36]
-    H --> I[Determine Winners]
-    I --> J[Calculate Payouts]
-    J --> K[Update Balances]
+    K --> L[Update Balances]
+    L --> M[Display Results]
 ```
 
 ## 🔮 Future Roadmap
@@ -586,10 +539,11 @@ flowchart LR
 - **Mainnet Launch**: Deploying on mainnet for real-world use
 - **Additional Games**: Expanding the game selection
 - **Enhanced DeFi Features**: Staking, farming, yield strategies
-- **Gasless Transactions**: Improving user convenience
 - **Developer Platform**: Allowing third-party game development
-- **Live Streaming**: In-app gameplay streaming
+- **Advanced Social Features**: Enhanced live streaming and chat capabilities
+- **ROI Share Links**: Shareable proof-links for withdrawals that render dynamic cards on social platforms
 - **Expanded Smart Account Features**: More delegation options
+- **Tournament System**: Competitive gaming with leaderboards and prizes
 - **Provably Fair**: All randomness verified on-chain via Pyth Entropy
 - **Non-custodial**: Users maintain full control of their funds
 - **Transparent**: All game logic and outcomes are verifiable

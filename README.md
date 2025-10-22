@@ -444,26 +444,20 @@ sequenceDiagram
     U->>UI: Select Multiple Games
     UI->>SA: Prepare Batch Transaction
     
-    rect rgb(200, 255, 200)
-        Note over SA,MT: Batch Transaction on Monad
-        SA->>MT: Batch Bet Transaction
-        MT->>SA: Confirm All Bets
-    end
+    Note over SA,MT: Batch Transaction on Monad
+    SA->>MT: Batch Bet Transaction
+    MT->>SA: Confirm All Bets
     
-    rect rgb(200, 200, 255)
-        Note over AS,PE: Entropy Generation on Arbitrum
-        UI->>AS: Request Entropy for All Games
-        AS->>PE: Generate Multiple Random Numbers
-        PE->>AS: Return Entropy Proofs
-        AS->>UI: All Game Results
-    end
+    Note over AS,PE: Entropy Generation on Arbitrum
+    UI->>AS: Request Entropy for All Games
+    AS->>PE: Generate Multiple Random Numbers
+    PE->>AS: Return Entropy Proofs
+    AS->>UI: All Game Results
     
-    rect rgb(255, 200, 200)
-        Note over SA,MT: Batch Payout on Monad
-        UI->>SA: Process Batch Payouts
-        SA->>MT: Batch Payout Transaction
-        MT->>SA: Confirm All Payouts
-    end
+    Note over SA,MT: Batch Payout on Monad
+    UI->>SA: Process Batch Payouts
+    SA->>MT: Batch Payout Transaction
+    MT->>SA: Confirm All Payouts
     
     SA->>UI: Update All Game States
     UI->>U: Display All Results

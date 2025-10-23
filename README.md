@@ -2,8 +2,6 @@
 
 A decentralized casino platform built on Monad Testnet with Pyth Entropy for provably fair gaming and MetaMask Smart Accounts integration.
 
-> **Hackathon Submission**: This project is being submitted for the "Best consumer application" track of the MetaMask Smart Accounts x Monad Dev Cook-Off hackathon.
-
 ## 🎮 The Story Behind APT Casino
 
 A few days ago, I was exploring transactions on Etherscan when I saw an advertisement for a popular centralized casino platform offering a 200% bonus on first deposits. I deposited 120 USDT and received 360 USDT in total balance in their custodial wallet.

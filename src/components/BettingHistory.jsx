@@ -3,9 +3,10 @@ import React from 'react';
 import { Box, Typography, Paper, Chip, IconButton, Tooltip } from '@mui/material';
 import { OpenInNew, Verified, Security } from '@mui/icons-material';
 
-const BettingHistory = ({ history }) => {
+const BettingHistory = ({ history = [] }) => {
   const openMonadExplorer = (txHash) => {
-    if (txHash) {
+    if (!txHash || typeof window === 'undefined') return;
+    try {
       const network = process.env.NEXT_PUBLIC_NETWORK || 'monad-testnet';
       let explorerUrl;
       
@@ -16,11 +17,24 @@ const BettingHistory = ({ history }) => {
       }
       
       window.open(explorerUrl, '_blank');
+    } catch (error) {
+      console.error('Error opening Monad explorer:', error);
+    }
+  };
+  
+  const openEntropyExplorer = (txHash) => {
+    if (!txHash || typeof window === 'undefined') return;
+    try {
+      const entropyUrl = `https://fortuna.pyth.network/tx/${txHash}`;
+      window.open(entropyUrl, '_blank');
+    } catch (error) {
+      console.error('Error opening Entropy explorer:', error);
     }
   };
 
   const formatTxHash = (hash) => {
-    if (!hash) return 'N/A';
+    if (!hash || typeof hash !== 'string') return 'N/A';
+    if (hash.length < 10) return hash;
     return `${hash.slice(0, 6)}...${hash.slice(-4)}`;
   };
   return (
@@ -115,7 +129,12 @@ const BettingHistory = ({ history }) => {
                         transform: bet.vrfDetails?.transactionHash ? 'scale(1.1)' : 'none'
                       }
                     }}
-                    onClick={() => bet.vrfDetails?.transactionHash && openMonadExplorer(bet.vrfDetails.transactionHash)}
+                    onClick={(e) => {
+                      e?.stopPropagation?.();
+                      if (bet.vrfDetails?.transactionHash && typeof openEntropyExplorer === 'function') {
+                        openEntropyExplorer(bet.vrfDetails.transactionHash);
+                      }
+                    }}
                   >
                     {bet.roll}
                     {bet.vrfDetails?.transactionHash && (
@@ -146,14 +165,19 @@ const BettingHistory = ({ history }) => {
                   <Typography variant="caption" color="text.secondary" sx={{ mr: 1 }}>
                     VRF:
                   </Typography>
-                  <Tooltip title="Click to verify on Monad Explorer">
+                  <Tooltip title="Click to verify on Pyth Entropy Explorer">
                     <Chip
                       label={formatTxHash(bet.vrfDetails.transactionHash)}
                       size="small"
                       variant="outlined"
                       color="success"
                       icon={<Verified />}
-                      onClick={() => openMonadExplorer(bet.vrfDetails.transactionHash)}
+                      onClick={(e) => {
+                        e?.stopPropagation?.();
+                        if (bet.vrfDetails?.transactionHash && typeof openEntropyExplorer === 'function') {
+                          openEntropyExplorer(bet.vrfDetails.transactionHash);
+                        }
+                      }}
                       sx={{ 
                         fontSize: '0.6rem', 
                         height: 20,
